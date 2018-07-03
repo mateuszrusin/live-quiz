@@ -10,9 +10,11 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class AppComponent {
     public items: Observable<any[]>;
+    public questions: Observable<any[]>;
     public check: boolean;
 
     constructor(db: AngularFirestore) {
         this.items = db.collection('/users').valueChanges();
+        this.questions = db.collection('/questions').valueChanges();
     }
 }

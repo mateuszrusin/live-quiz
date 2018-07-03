@@ -19,8 +19,31 @@
     </mat-card-actions>
 </mat-card>
 
+<p>
+    <mat-form-field appearance="outline">
+        <mat-label>Outline form field</mat-label>
+        <input matInput placeholder="Placeholder">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>Hint</mat-hint>
+    </mat-form-field>
+</p>
+
+
+<section>
+    {{ check | json }}
+</section>
+
 <ul>
     <li *ngFor="let item of items | async">
         <pre>{{ item | json }}</pre>
     </li>
 </ul>
+
+<div *ngFor="let question of questions | async">
+    <mat-form-field appearance="outline">
+        <mat-label>Outline form field</mat-label>
+        <input matInput placeholder="Placeholder" [ngModel]="question.title" (ngModelChange)="question.title.update({title: $event})">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>Hint</mat-hint>
+    </mat-form-field>
+</div>
