@@ -1,22 +1,27 @@
-import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import {environment} from './../environments/environment';
+import { environment } from './../environments/environment';
 
-import {AngularFireModule} from 'angularfire2';
-import {AngularFireDatabaseModule} from 'angularfire2/database';
-import {AngularFireAuthModule} from 'angularfire2/auth';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 
-import {AppComponent} from './app.component';
+import { AppComponent } from './app.component';
 
-import {AngularFirestore} from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { MatButtonModule, MatCardModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TasksComponent } from './components/tasks/tasks.component';
+import { AddTaskComponent } from './components/add-task/add-task.component';
+import { TaskService } from './services/task.service';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        TasksComponent,
+        AddTaskComponent
     ],
     imports: [
         BrowserAnimationsModule,
@@ -32,7 +37,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         MatIconModule
     ],
     providers: [
-        AngularFirestore
+        AngularFirestore,
+        TaskService
     ],
     bootstrap: [
         AppComponent
