@@ -1,32 +1,39 @@
-<ul *ngFor="let task of tasks | async" class="collection">
-  <li class="collection-item" (dblclick)="deleteTask($event, task)">
-    {{ task.id }} <strong>{{ task.title }}</strong> : {{ task.description }}
-    <a href="#" class="secondary-content">
-      <button (click)="deleteTask($event, task)" >DELETE</button>
-      <button (click)="editTask($event, task)" >EDIT</button>
-    </a>
-    <div *ngIf="editState && taskToEdit.id === task.id">
-      <form (ngSubmit)="updateTask(task)">
-        <div class="row">
-          <div class="input-field col s6">
-            <input
-              type="text" name="title"
-              placeholder="Edit Title" [(ngModel)]="task.title">
-          </div>
-          <div class="input-field col s6">
-              <input
-                type="text" name="description"
-                placeholder="Edit Description" [(ngModel)]="task.description">
-          </div>
-          <input type="submit" class="btn" value="Update Task">
-          <button class="btn red" (click)="deleteTask($event, task)">Delete Task</button>
-        </div>
-      </form>
-    </div>
-
-  </li>
-</ul>
-
+<div *ngIf="(tasks$ | async) as tasks; else noTasks">
+    <ul *ngFor="let task of tasks" class="collection">
+        <li class="collection-item">
+            {{ task.id }} <strong>{{ task.title }}</strong> : {{ task.description }}
+            <p>
+                <button mat-raised-button (click)="deleteTask($event, task)">DELETE</button>
+                <button mat-raised-button (click)="editTask($event, task)">EDIT</button>
+            </p>
+            <div *ngIf="editState && taskToEdit.id === task.id">
+                <form (ngSubmit)="updateTask(task)">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Outline form field</mat-label>
+                                <input matInput placeholder="Edit Title" name="title" [(ngModel)]="task.title">
+                                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                                <mat-hint>Hint</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="input-field col s6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Outline form field</mat-label>
+                                <input matInput placeholder="Edit description" name="description" [(ngModel)]="task.description">
+                                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                                <mat-hint>Hint</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <button mat-raised-button type="submit">Update</button>
+                        <button mat-raised-button (click)="cancel($event, task)">Cancel</button>
+                        <button mat-raised-button (click)="deleteTask($event, task)">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </li>
+    </ul>
+</div>
 <ng-template #noTasks>
-  <h5>There is not Tasks yet.</h5>
+    <h5>There is not Tasks yet.</h5>
 </ng-template>

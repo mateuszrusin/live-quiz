@@ -30,6 +30,15 @@ export class TaskService {
         return this.tasks;
     }
 
+    getTask(task: Task) {
+        this.taskDoc = this.afs.doc(`tasks/${task.id}`);
+        return this.taskDoc.valueChanges().pipe(
+            map(changes => {
+                return changes;
+            })
+        );
+    }
+
     addTask(task: Task) {
         this.tasksCollection.add(task);
     }
