@@ -1,11 +1,43 @@
-<p>
-  {{ title }}
-</p>
 
+<!--<ul>-->
+    <!--<li *ngFor="let user of users | async">-->
+        <!--<pre>{{ user | json }}</pre>-->
+    <!--</li>-->
+<!--</ul>-->
 
-<hr />
-<ul>
-  <li *ngFor="let user of users | async">
-    <pre>{{ user | json }}</pre>
-  </li>
-</ul>
+<div class="example-container">
+    <mat-card>
+        <form (ngSubmit)="submitHandler()" [formGroup]="myForm">
+                <mat-form-field appearance="standard">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" placeholder="Enter email" name="email">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint>Hint</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard">
+                    <mat-label>message</mat-label>
+                    <input formControlName="message" matInput placeholder="Enter message" name="message">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint>Hint</mat-hint>
+                </mat-form-field>
+
+                <mat-checkbox class="checkbox" indeterminate="isIndeterminate">
+                    Inderterminate
+                </mat-checkbox>
+                <mat-checkbox class="checkbox" [checked]="isChecked">
+                    Checked already
+                </mat-checkbox>
+                <mat-checkbox class="checkbox">
+                    Unchecked
+                </mat-checkbox>
+
+                <button mat-raised-button (click)="submitHandler()" [disabled]="loading">
+                    Login
+                </button>
+        </form>
+    </mat-card>
+</div>
+<div *ngIf="success">
+    <qrcode [qrdata]="'Your QR code data string'" [size]="256" [level]="'M'"></qrcode>
+</div>
