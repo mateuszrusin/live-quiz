@@ -1,9 +1,9 @@
 
-<!--<ul>-->
-    <!--<li *ngFor="let user of users | async">-->
-        <!--<pre>{{ user | json }}</pre>-->
-    <!--</li>-->
-<!--</ul>-->
+<ul>
+    <li *ngFor="let question of questions | async">
+        <pre>{{ question | json }}</pre>
+    </li>
+</ul>
 
 <div class="example-container">
     <mat-card>
@@ -22,13 +22,13 @@
                     <mat-hint>Hint</mat-hint>
                 </mat-form-field>
 
-                <mat-checkbox class="checkbox" indeterminate="isIndeterminate">
+                <mat-checkbox class="checkbox" indeterminate="isIndeterminate" formControlName="choose">
                     Inderterminate
                 </mat-checkbox>
-                <mat-checkbox class="checkbox" [checked]="isChecked">
+                <mat-checkbox class="checkbox" [checked]="isChecked" formControlName="choose">
                     Checked already
                 </mat-checkbox>
-                <mat-checkbox class="checkbox">
+                <mat-checkbox class="checkbox" formControlName="choose">
                     Unchecked
                 </mat-checkbox>
 

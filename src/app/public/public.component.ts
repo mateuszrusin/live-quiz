@@ -12,8 +12,7 @@ import {Validators} from '@angular/forms';
 })
 export class PublicComponent implements OnInit {
 
-    private usersCollection = this.db.collection('/users');
-    public users: Observable<any[]> = this.usersCollection.valueChanges();
+    public questions: Observable<any[]> = this.db.collection('/questions').valueChanges();
     public user: any;
 
     myForm: FormGroup;
@@ -30,7 +29,8 @@ export class PublicComponent implements OnInit {
 
         this.myForm = this.fb.group({
             email: ['', Validators.required],
-            message: ['', Validators.required]
+            message: ['', Validators.required],
+            choose: ['', Validators.required],
         });
 
     }

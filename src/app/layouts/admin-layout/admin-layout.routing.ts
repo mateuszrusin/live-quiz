@@ -8,7 +8,7 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
-import {LoginComponent} from '../../login/login.component';
+import {QuizComponent} from '../../pages/quiz/quiz.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -53,8 +53,8 @@ export const AdminLayoutRoutes: Routes = [
     //         component: UpgradeComponent
     //     }]
     // }
-    { path: 'login',          component: LoginComponent },
     { path: 'dashboard',      component: DashboardComponent },
+    { path: 'quiz',           component: QuizComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
@@ -62,5 +62,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
-    { path: '',               redirectTo: 'dashboard', pathMatch: 'full' }
+    { path: '',               redirectTo: 'quiz', pathMatch: 'full' }
 ];

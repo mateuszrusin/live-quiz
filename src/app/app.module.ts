@@ -36,7 +36,9 @@ import {
     MatCardModule,
     MatCheckboxModule,
     MatFormFieldModule,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule,
+    MatTableModule
 } from '@angular/material';
 import {AuthGuard} from './services/auth.guard';
 
@@ -50,16 +52,6 @@ import {AuthGuard} from './services/auth.guard';
         AppRoutingModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
-        MatButtonModule,
-        MatRippleModule,
-        MatInputModule,
-        MatTooltipModule,
-        MatInputModule,
-        MatCardModule,
-        MatButtonModule,
-        MatCheckboxModule,
-        MatFormFieldModule,
-        MatIconModule,
         AgmCoreModule.forRoot({
             apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
         })

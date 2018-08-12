@@ -1,0 +1,23 @@
+{
+  "name": "Quiz numer one 1",
+  "questions": [
+    {
+      "type": "checkbox",
+      "text": "Choose one",
+      "set": [
+        {
+          "id": 1,
+          "value": "Lorem ipsum tere fere"
+        },
+        {
+          "id": 2,
+          "value": "Number two three na na na"
+        },
+        {
+          "id": 3,
+          "value": "Last but not least at the end"
+        }
+      ]
+    }
+  ]
+}
