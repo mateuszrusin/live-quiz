@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
 
-import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { UserProfileComponent } from '../../user-profile/user-profile.component';
-import { TableListComponent } from '../../table-list/table-list.component';
-import { TypographyComponent } from '../../typography/typography.component';
-import { IconsComponent } from '../../icons/icons.component';
-import { MapsComponent } from '../../maps/maps.component';
-import { NotificationsComponent } from '../../notifications/notifications.component';
-import { UpgradeComponent } from '../../upgrade/upgrade.component';
-import {QuizComponent} from '../../pages/quiz/quiz.component';
+import { DashboardComponent } from '../../components/admin/dashboard/dashboard.component';
+import { UserProfileComponent } from '../../components/admin/user-profile/user-profile.component';
+import { TableListComponent } from '../../components/admin/table-list/table-list.component';
+import { TypographyComponent } from '../../components/admin/typography/typography.component';
+import { IconsComponent } from '../../components/admin/icons/icons.component';
+import { MapsComponent } from '../../components/admin/maps/maps.component';
+import { NotificationsComponent } from '../../components/admin/notifications/notifications.component';
+import { UpgradeComponent } from '../../components/admin/upgrade/upgrade.component';
+import {QuizComponent} from '../../components/admin/quiz/quiz.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PublicComponent } from '../../public/public.component';
+import { PublicComponent } from '../../components/public/public/public.component';
 
 
 import { AngularFireModule } from 'angularfire2';
