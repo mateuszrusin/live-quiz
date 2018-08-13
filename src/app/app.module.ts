@@ -9,8 +9,7 @@ import { AppComponent } from './app.component';
 import { AgmCoreModule } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
-import { AuthService } from './services/auth.service';
-import { AuthGuard } from './services/auth.guard';
+import {AppRoutingModule} from './app.routing';
 
 @NgModule({
     imports: [
@@ -19,6 +18,7 @@ import { AuthGuard } from './services/auth.guard';
         HttpModule,
         ComponentsModule,
         RouterModule,
+        AppRoutingModule,
         AgmCoreModule.forRoot({
             apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
         })
@@ -28,7 +28,7 @@ import { AuthGuard } from './services/auth.guard';
         AdminLayoutComponent,
         PublicLayoutComponent
     ],
-    providers: [AuthGuard, AuthService],
+    // providers: [AuthGuard, AuthService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -5,14 +5,13 @@ import {NavbarComponent} from './components/navbar/navbar.component';
 import {Router, NavigationEnd, NavigationStart} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
-import {AuthService} from '../../services/auth.service';
 
 @Component({
     selector: 'app-admin-layout',
     templateUrl: './admin-layout.component.html',
     styleUrls: ['./admin-layout.component.scss']
 })
-export class AdminLayoutComponent implements OnInit {
+export class AdminLayoutComponent implements OnInit, AfterViewInit {
     private _router: Subscription;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
@@ -21,7 +20,7 @@ export class AdminLayoutComponent implements OnInit {
     public email: string;
     public password: string;
 
-    constructor(public location: Location, private router: Router, public authService: AuthService) {
+    constructor(public location: Location, private router: Router) {
     }
 
     ngOnInit() {
@@ -50,14 +49,16 @@ export class AdminLayoutComponent implements OnInit {
         });
         this.router.events.subscribe((event: any) => {
             if (event instanceof NavigationStart) {
-                if (event.url != this.lastPoppedUrl)
+                if (event.url !== this.lastPoppedUrl) {
                     this.yScrollStack.push(window.scrollY);
+                }
             } else if (event instanceof NavigationEnd) {
-                if (event.url == this.lastPoppedUrl) {
+                if (event.url === this.lastPoppedUrl) {
                     this.lastPoppedUrl = undefined;
                     window.scrollTo(0, this.yScrollStack.pop());
-                } else
+                } else {
                     window.scrollTo(0, 0);
+                }
             }
         });
         this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
@@ -75,12 +76,11 @@ export class AdminLayoutComponent implements OnInit {
     }
 
     isMaps(path) {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
+        let titlee = this.location.prepareExternalUrl(this.location.path());
         titlee = titlee.slice(1);
-        if (path == titlee) {
+        if (path === titlee) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -100,14 +100,4 @@ export class AdminLayoutComponent implements OnInit {
         }
         return bool;
     }
-
-    login() {
-        this.authService.login(this.email, this.password);
-        this.email = this.password = '';
-    }
-
-    logout() {
-        this.authService.logout();
-    }
-
 }
