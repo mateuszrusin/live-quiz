@@ -28,7 +28,11 @@
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="symbol">
                         <mat-header-cell *matHeaderCellDef> Symbol</mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.symbol}}</mat-cell>
+                        <mat-cell *matCellDef="let element">
+                            <button mat-raised-button (click)="edit()">
+                                Edit
+                            </button>
+                        </mat-cell>
                     </ng-container>
 
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -36,7 +40,16 @@
                 </mat-table>
 
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+                <button mat-raised-button (click)="add()">
+                    Add
+                </button>
             </mat-card>
         </div>
+        <ul>
+            <li *ngFor="let quiz of quizzes | async">
+                <pre>{{ quiz | json }}</pre>
+            </li>
+        </ul>
     </div>
 </div>

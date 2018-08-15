@@ -26,6 +26,7 @@ import { AngularFireModule } from 'angularfire2';
 import { environment } from '../../../environments/environment';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import {QuizService} from '../../services/quiz.service';
 
 @NgModule({
     imports: [
@@ -58,6 +59,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
     ],
     providers: [
         AngularFirestore,
+        QuizService
     ],
 })
 

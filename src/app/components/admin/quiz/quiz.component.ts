@@ -4,6 +4,7 @@ import {FormBuilder} from '@angular/forms';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {QuizService} from '../../../services/quiz.service';
 
 @Component({
     selector: 'app-quiz',
@@ -24,9 +25,9 @@ export class QuizComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    public quizzes: Observable<any[]> = this.db.collection('/contacts').valueChanges();
+    public quizzes: Observable<any[]> = this.quizService.list();
 
-    constructor(private db: AngularFirestore, private fb: FormBuilder) {
+    constructor(private quizService: QuizService, private fb: FormBuilder) {
 
     }
 
@@ -61,6 +62,16 @@ export class QuizComponent implements OnInit {
 
     filter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    add() {
+        console.log('ADD');
+        const quiz = this.quizService.create();
+        console.log(quiz);
+    }
+
+    edit() {
+        console.log('EDIT');
     }
 }
 
