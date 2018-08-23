@@ -28,14 +28,17 @@ export class QuizService {
     }
 
     /// Creates an question, then returns as an object
-    create(): AngularFirestoreDocument<Quiz> {
-        const quiz = {};
-        this.quizzesCollection.add(quiz).then();
+    create() {
 
-        //  console.log(id);
+        const quiz = {
+            title: 'Quiz ' + Math.random()
+        };
 
-        // return this.db.doc('/questions/' + id);
-        return;
+        return this.quizzesCollection.add(quiz);
+    }
+
+    get(id: string): AngularFirestoreDocument<Quiz> {
+        return this.quizzesCollection.doc(id);
     }
 
 

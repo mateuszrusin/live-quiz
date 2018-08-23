@@ -1,35 +1,40 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="mat-elevation-z8">
+
+            <div>
+                {{ quiz | async | json }}
+            </div>
+
             <mat-card>
                 <mat-form-field>
                     <input matInput (keyup)="filter($event.target.value)" placeholder="Filter">
                 </mat-form-field>
 
-                <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+                <mat-table [dataSource]="data" class="mat-elevation-z8" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
                     <!-- Position Column -->
                     <ng-container matColumnDef="position">
                         <mat-header-cell *matHeaderCellDef> No.</mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.position}}</mat-cell>
+                        <mat-cell *matCellDef="let i = index"> {{i+1}}</mat-cell>
                     </ng-container>
 
                     <!-- Name Column -->
-                    <ng-container matColumnDef="name">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Name</mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.name}}</mat-cell>
+                    <ng-container matColumnDef="title">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Title</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.title}}</mat-cell>
                     </ng-container>
 
                     <!-- Weight Column -->
-                    <ng-container matColumnDef="weight">
-                        <mat-header-cell *matHeaderCellDef> Weight</mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.weight}}</mat-cell>
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.id}}</mat-cell>
                     </ng-container>
 
                     <!-- Symbol Column -->
-                    <ng-container matColumnDef="symbol">
-                        <mat-header-cell *matHeaderCellDef> Symbol</mat-header-cell>
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
                         <mat-cell *matCellDef="let element">
-                            <button mat-raised-button (click)="edit()">
+                            <button mat-raised-button (click)="edit(element.id)">
                                 Edit
                             </button>
                         </mat-cell>
