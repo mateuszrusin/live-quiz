@@ -41,11 +41,8 @@ export class QuizService {
         return this.quizzesCollection.doc(id);
     }
 
-
-    /// Updates an existing question
-    update(question: Observable<any>, data: any) {
-        // return question.update(data);
-        return;
+    save(id: string, data: any): Promise<void> {
+        return this.get(id).update(data);
     }
 
     list(): Observable<Quiz[]> {

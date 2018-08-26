@@ -1,0 +1,65 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="mat-elevation-z8">
+
+            <div>
+                {{ quiz | async | json }}
+            </div>
+
+            <mat-card>
+                <mat-form-field>
+                    <input matInput (keyup)="filter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <mat-table [dataSource]="data" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                        <mat-header-cell *matHeaderCellDef> No.</mat-header-cell>
+                        <mat-cell *matCellDef="let i = index"> {{i+1}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="title">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Title</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.title}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.id}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <button mat-raised-button (click)="edit(element.id)">
+                                Edit
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+
+                <mat-paginator
+                        [pageSizeOptions]="[5, 10, 20]"
+                        [length]="resultsLength"
+                        [pageSize]="5"
+                        showFirstLastButtons>
+                </mat-paginator>
+
+                <button mat-raised-button (click)="add()">
+                    Add
+                </button>
+            </mat-card>
+        </div>
+        <ul>
+            <li *ngFor="let quiz of quizzes | async">
+                <pre>{{ quiz | json }}</pre>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -5,56 +5,45 @@
             <div>
                 {{ quiz | async | json }}
             </div>
-
             <mat-card>
-                <mat-form-field>
-                    <input matInput (keyup)="filter($event.target.value)" placeholder="Filter">
-                </mat-form-field>
+                <form [formGroup]="quizForm">
 
-                <mat-table [dataSource]="data" class="mat-elevation-z8" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
-                    <!-- Position Column -->
-                    <ng-container matColumnDef="position">
-                        <mat-header-cell *matHeaderCellDef> No.</mat-header-cell>
-                        <mat-cell *matCellDef="let i = index"> {{i+1}}</mat-cell>
-                    </ng-container>
+                    Value: {{ quizForm.value | json }}
 
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="title">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Title</mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.title}}</mat-cell>
-                    </ng-container>
+                    <hr>
 
-                    <!-- Weight Column -->
-                    <ng-container matColumnDef="id">
-                        <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.id}}</mat-cell>
-                    </ng-container>
+                    <mat-form-field>
+                        <input matInput placeholder="title" formControlName="title">
+                    </mat-form-field>
 
-                    <!-- Symbol Column -->
-                    <ng-container matColumnDef="action">
-                        <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
-                        <mat-cell *matCellDef="let element">
-                            <button mat-raised-button (click)="edit(element.id)">
-                                Edit
-                            </button>
-                        </mat-cell>
-                    </ng-container>
+                    <mat-card>
+                        <mat-card-title>Questions</mat-card-title>
+                        <div formArrayName="questions">
 
-                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                </mat-table>
+                            <div *ngFor="let question of questionForms.controls; let i=index" [formGroupName]="i">
 
-                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
-                <button mat-raised-button (click)="add()">
-                    Add
-                </button>
+                                <mat-form-field class="xs">
+                                    <input matInput placeholder="title" formControlName="title">
+                                </mat-form-field>
+
+                                <mat-form-field class="xs">
+                                    <input matInput placeholder="content" formControlName="content">
+                                </mat-form-field>
+
+
+                                <button mat-raised-button color="warn" (click)="deleteQuestion()">Delete</button>
+
+                            </div>
+
+                        </div>
+
+                        <button mat-raised-button (click)="addQuestion()">Add question</button>
+                    </mat-card>
+
+                    <button mat-raised-button color="accent" (click)="save()">Save quiz</button>
+                </form>
             </mat-card>
         </div>
-        <ul>
-            <li *ngFor="let quiz of quizzes | async">
-                <pre>{{ quiz | json }}</pre>
-            </li>
-        </ul>
     </div>
 </div>

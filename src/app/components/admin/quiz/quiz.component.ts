@@ -1,11 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
-import {FormBuilder} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {QuizService} from '../../../services/quiz.service';
 import {Quiz} from 'app/models/quiz';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 
 @Component({
     selector: 'app-quiz',
@@ -14,73 +15,71 @@ import {Quiz} from 'app/models/quiz';
 })
 export class QuizComponent implements OnInit {
 
-    displayedColumns: string[] = ['position', 'title', 'id', 'action'];
-    dataSource = new MatTableDataSource<any>();
+    public quizForm: FormGroup;
+    public quiz$: Observable<Quiz>;
 
-    data: any[] = [];
+    private id: string;
 
-    resultsLength = 0;
-    isLoadingResults = true;
-    isRateLimitReached = false;
-
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild(MatSort) sort: MatSort;
-
-    public quizzes: Observable<Quiz[]> = this.quizService.list();
-
-    public quiz: Observable<Quiz>;
-
-    constructor(private quizService: QuizService, private fb: FormBuilder) {
+    constructor(
+        private quizService: QuizService,
+        private fb: FormBuilder,
+        private route: ActivatedRoute,
+        private router: Router,
+        private snackBar: MatSnackBar
+    ) {
 
     }
 
     ngOnInit() {
-        this.dataSource.paginator = this.paginator;
 
-        this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+        this.quizForm = this.fb.group({
+            title: '',
+            questions: this.fb.array([])
+        });
 
-        merge(this.sort.sortChange, this.paginator.page)
-            .pipe(
-                startWith({}),
-                switchMap(() => {
-                    this.isLoadingResults = true;
-                    return this.quizzes;
-                }),
-                map(data => {
-                    // Flip flag to show that loading has finished.
-                    this.isLoadingResults = false;
-                    this.isRateLimitReached = false;
-                    this.resultsLength = data.length;
-                    return data;
-                }),
-                catchError(() => {
-                    this.isLoadingResults = false;
-                    // Catch if the GitHub API has reached its rate limit. Return empty data.
-                    this.isRateLimitReached = true;
-                    return observableOf([]);
-                })
-            ).subscribe(data => this.data = data);
-    }
+        this.quizForm.valueChanges.subscribe(console.log);
 
-    filter(filterValue: string) {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
+        this.quiz$ = this.route.paramMap.pipe(
+            switchMap((params: ParamMap) => {
+                this.id = params.get('id');
+                return this.quizService.get(this.id).valueChanges();
+            })
+        );
 
-        if (this.dataSource.paginator) {
-            this.dataSource.paginator.firstPage();
-        }
-    }
-
-    add() {
-        console.log('ADD');
-        this.quizService.create().then(
-            (data) => {
-                this.quiz = this.quizService.get(data.id).valueChanges();
+        this.quiz$.subscribe(data => {
+            let i = 0;
+            this.quizForm.patchValue(data);
+            for (const question of data.questions) {
+                this.questionForms.setControl(i++, this.fb.group(question));
             }
+
+        });
+
+    }
+
+    save() {
+        this.quizService.save(this.id, this.quizForm.value).then(() =>
+            this.snackBar.open('Quiz Saved', '', {
+                duration: 5000,
+            })
         );
     }
 
-    edit(id: string) {
-        console.log('EDIT ' + id);
-        this.quiz = this.quizService.get(id).valueChanges();
+    get questionForms(): FormArray {
+        return this.quizForm.get('questions') as FormArray
+    }
+
+    addQuestion() {
+        const question = this.fb.group({
+            title: Math.random(),
+            content: 'Content ' + Math.random(),
+            answers: [],
+        });
+
+        this.questionForms.push(question);
+    }
+
+    deleteQuestion(i) {
+        this.questionForms.removeAt(i)
     }
 }

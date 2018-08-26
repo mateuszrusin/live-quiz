@@ -18,15 +18,16 @@ import {
     MatRippleModule,
     MatTooltipModule,
     MatPaginatorModule,
-    MatTableModule, MatCardModule, MatSortModule,
+    MatTableModule, MatCardModule, MatSortModule, MatSnackBarModule,
 } from '@angular/material';
-import {QuizComponent} from '../../components/admin/quiz/quiz.component';
+import {QuizzesComponent} from '../../components/admin/quizzes/quizzes.component';
 import {AngularFirestore} from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../../../environments/environment';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import {QuizService} from '../../services/quiz.service';
+import {QuizComponent} from '../../components/admin/quiz/quiz.component';
 
 @NgModule({
     imports: [
@@ -44,10 +45,12 @@ import {QuizService} from '../../services/quiz.service';
         MatPaginatorModule,
         MatTableModule,
         MatCardModule,
-        MatSortModule
+        MatSortModule,
+        MatSnackBarModule
     ],
     declarations: [
         DashboardComponent,
+        QuizzesComponent,
         QuizComponent,
         UserProfileComponent,
         TableListComponent,
