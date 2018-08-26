@@ -1,9 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
-import {merge, Observable, of as observableOf} from 'rxjs';
-import {catchError, map, startWith, switchMap} from 'rxjs/operators';
-import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
+import {Observable} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material';
 import {QuizService} from '../../../services/quiz.service';
 import {Quiz} from 'app/models/quiz';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
@@ -26,9 +25,7 @@ export class QuizComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private snackBar: MatSnackBar
-    ) {
-
-    }
+    ) {}
 
     ngOnInit() {
 
@@ -37,7 +34,7 @@ export class QuizComponent implements OnInit {
             questions: this.fb.array([])
         });
 
-        this.quizForm.valueChanges.subscribe(console.log);
+        // this.quizForm.valueChanges.subscribe(console.log);
 
         this.quiz$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
@@ -52,9 +49,7 @@ export class QuizComponent implements OnInit {
             for (const question of data.questions) {
                 this.questionForms.setControl(i++, this.fb.group(question));
             }
-
         });
-
     }
 
     save() {

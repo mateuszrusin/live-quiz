@@ -1,46 +1,42 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="mat-elevation-z8">
-
-            <div>
-                {{ quiz | async | json }}
-            </div>
             <mat-card>
                 <form [formGroup]="quizForm">
-
-                    Value: {{ quizForm.value | json }}
-
-                    <hr>
-
-                    <mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Title</mat-label>
                         <input matInput placeholder="title" formControlName="title">
                     </mat-form-field>
-
-                    <mat-card>
-                        <mat-card-title>Questions</mat-card-title>
-                        <div formArrayName="questions">
-
+                    <div formArrayName="questions">
+                        <mat-accordion>
                             <div *ngFor="let question of questionForms.controls; let i=index" [formGroupName]="i">
+                                <mat-expansion-panel [expanded]="i+1 == questionForms.controls.length">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            Question #{{ i+1 }}
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            {{ question.value.answers?.length || 0 }} answers
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
 
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Title</mat-label>
+                                        <input matInput placeholder="title" formControlName="title">
+                                    </mat-form-field>
 
-                                <mat-form-field class="xs">
-                                    <input matInput placeholder="title" formControlName="title">
-                                </mat-form-field>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Content</mat-label>
+                                        <textarea matInput placeholder="content" formControlName="content"></textarea>
+                                    </mat-form-field>
 
-                                <mat-form-field class="xs">
-                                    <input matInput placeholder="content" formControlName="content">
-                                </mat-form-field>
-
-
-                                <button mat-raised-button color="warn" (click)="deleteQuestion()">Delete</button>
-
+                                    <button mat-raised-button color="warn" (click)="deleteQuestion()">Delete</button>
+                                </mat-expansion-panel>
                             </div>
-
-                        </div>
-
-                        <button mat-raised-button (click)="addQuestion()">Add question</button>
-                    </mat-card>
-
+                        </mat-accordion>
+                    </div>
+                    <br />
+                    <button mat-raised-button (click)="addQuestion()">Add question</button>
                     <button mat-raised-button color="accent" (click)="save()">Save quiz</button>
                 </form>
             </mat-card>
