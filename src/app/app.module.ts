@@ -18,10 +18,7 @@ import {AppRoutingModule} from './app.routing';
         HttpModule,
         ComponentsModule,
         RouterModule,
-        AppRoutingModule,
-        AgmCoreModule.forRoot({
-            apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
-        })
+        AppRoutingModule
     ],
     declarations: [
         AppComponent,

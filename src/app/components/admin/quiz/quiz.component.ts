@@ -44,11 +44,26 @@ export class QuizComponent implements OnInit {
         );
 
         this.quiz$.subscribe(data => {
-            let i = 0;
+
             this.quizForm.patchValue(data);
-            for (const question of data.questions) {
-                this.questionForms.setControl(i++, this.fb.group(question));
-            }
+
+            const questions = data.questions.map(question => {
+                const answers = question.answers.map(answer => {
+                    return this.fb.group({
+                        content: [answer.content],
+                        isCorrect: [answer.isCorrect]
+                    });
+                });
+
+                return this.fb.group({
+                    type: [question.type],
+                    title: [question.title],
+                    content: [question.content],
+                    answers: this.fb.array(answers),
+                })
+            });
+
+            this.quizForm.setControl('questions', this.fb.array(questions));
         });
     }
 
@@ -66,9 +81,10 @@ export class QuizComponent implements OnInit {
 
     addQuestion() {
         const question = this.fb.group({
-            title: Math.random(),
-            content: 'Content ' + Math.random(),
-            answers: [],
+            type: '',
+            title: '',
+            content: '',
+            answers: this.fb.array([]),
         });
 
         this.questionForms.push(question);
@@ -76,5 +92,22 @@ export class QuizComponent implements OnInit {
 
     deleteQuestion(i) {
         this.questionForms.removeAt(i)
+    }
+
+    getAnswerForms(i): FormArray {
+        return this.questionForms.at(i).get('answers') as FormArray
+    }
+
+    addAnswer(i) {
+        const answer = this.fb.group({
+            content: '',
+            isCorrect: false
+        });
+
+        this.getAnswerForms(i).push(answer);
+    }
+
+    deleteAnswer(i, j) {
+        this.getAnswerForms(i).removeAt(j);
     }
 }

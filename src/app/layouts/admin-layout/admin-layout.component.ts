@@ -24,14 +24,6 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-
-        const rand = Math.random();
-
-        console.log(rand);
-
-        this.test = rand > 0.5;
-
-
         const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
         if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {

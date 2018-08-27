@@ -31,7 +31,8 @@ export class QuizService {
     create() {
 
         const quiz = {
-            title: 'Quiz ' + Math.random()
+            title: '',
+            questions: []
         };
 
         return this.quizzesCollection.add(quiz);

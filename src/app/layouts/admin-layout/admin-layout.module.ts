@@ -18,7 +18,7 @@ import {
     MatRippleModule,
     MatTooltipModule,
     MatPaginatorModule,
-    MatTableModule, MatCardModule, MatSortModule, MatSnackBarModule, MatExpansionModule,
+    MatTableModule, MatCardModule, MatSortModule, MatSnackBarModule, MatExpansionModule, MatSelectModule, MatCheckboxModule,
 } from '@angular/material';
 import {QuizzesComponent} from '../../components/admin/quizzes/quizzes.component';
 import {AngularFirestore} from 'angularfire2/firestore';
@@ -41,13 +41,15 @@ import {QuizComponent} from '../../components/admin/quiz/quiz.component';
         MatButtonModule,
         MatRippleModule,
         MatInputModule,
+        MatSelectModule,
         MatTooltipModule,
         MatPaginatorModule,
         MatTableModule,
         MatCardModule,
         MatSortModule,
         MatSnackBarModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatCheckboxModule
     ],
     declarations: [
         DashboardComponent,

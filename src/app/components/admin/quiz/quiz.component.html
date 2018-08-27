@@ -16,9 +16,17 @@
                                             Question #{{ i+1 }}
                                         </mat-panel-title>
                                         <mat-panel-description>
-                                            {{ question.value.answers?.length || 0 }} answers
+                                            <button mat-button color="warn" (click)="deleteQuestion(i)">Delete</button>
                                         </mat-panel-description>
                                     </mat-expansion-panel-header>
+
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Type</mat-label>
+                                        <mat-select placeholder="select" formControlName="type">
+                                            <mat-option value="single">single choice</mat-option>
+                                            <mat-option value="multi">multi choice</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
 
                                     <mat-form-field appearance="outline">
                                         <mat-label>Title</mat-label>
@@ -30,14 +38,46 @@
                                         <textarea matInput placeholder="content" formControlName="content"></textarea>
                                     </mat-form-field>
 
-                                    <button mat-raised-button color="warn" (click)="deleteQuestion()">Delete</button>
+                                    <div formArrayName="answers">
+                                        <mat-accordion>
+                                            <div *ngFor="let answer of getAnswerForms(i).controls; let j=index" [formGroupName]="j">
+                                                <mat-expansion-panel>
+                                                    <mat-expansion-panel-header>
+                                                        <mat-panel-title>
+                                                            Answer #{{ j+1 }}
+                                                        </mat-panel-title>
+                                                        <mat-panel-description>
+                                                            <button mat-button color="warn" (click)="deleteAnswer(i,j)">Delete</button>
+                                                        </mat-panel-description>
+                                                    </mat-expansion-panel-header>
+
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>Content</mat-label>
+                                                        <input matInput placeholder="content" formControlName="content">
+                                                    </mat-form-field>
+
+                                                    <mat-checkbox class="checkbox" formControlName="isCorrect">
+                                                        is correct?
+                                                    </mat-checkbox>
+                                                </mat-expansion-panel>
+                                            </div>
+                                        </mat-accordion>
+                                        <br />
+                                        <div class="clearfix">
+                                            <button mat-raised-button class="pull-left" (click)="addAnswer(i)">Add answer</button>
+                                        </div>
+                                    </div>
+
+
                                 </mat-expansion-panel>
                             </div>
                         </mat-accordion>
                     </div>
                     <br />
-                    <button mat-raised-button (click)="addQuestion()">Add question</button>
-                    <button mat-raised-button color="accent" (click)="save()">Save quiz</button>
+                    <div class="clearfix">
+                        <button mat-raised-button class="pull-left" (click)="addQuestion()">Add question</button>
+                        <button mat-raised-button class="pull-right" color="accent"(click)="save()">Save quiz</button>
+                    </div>
                 </form>
             </mat-card>
         </div>
