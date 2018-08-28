@@ -10,6 +10,7 @@ import { AgmCoreModule } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import {AppRoutingModule} from './app.routing';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import {AppRoutingModule} from './app.routing';
         HttpModule,
         ComponentsModule,
         RouterModule,
-        AppRoutingModule
+        AppRoutingModule,
+        TranslateModule.forRoot()
     ],
     declarations: [
         AppComponent,

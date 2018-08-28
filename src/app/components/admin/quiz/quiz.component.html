@@ -56,7 +56,7 @@
                                                         <input matInput placeholder="content" formControlName="content">
                                                     </mat-form-field>
 
-                                                    <mat-checkbox class="checkbox" formControlName="isCorrect">
+                                                    <mat-checkbox (change)="change($event,i)" class="checkbox" formControlName="isCorrect">
                                                         is correct?
                                                     </mat-checkbox>
                                                 </mat-expansion-panel>
@@ -67,8 +67,6 @@
                                             <button mat-raised-button class="pull-left" (click)="addAnswer(i)">Add answer</button>
                                         </div>
                                     </div>
-
-
                                 </mat-expansion-panel>
                             </div>
                         </mat-accordion>

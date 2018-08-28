@@ -110,4 +110,18 @@ export class QuizComponent implements OnInit {
     deleteAnswer(i, j) {
         this.getAnswerForms(i).removeAt(j);
     }
+
+    change(event, i) {
+        if (this.questionForms.at(i).value.type === 'single') {
+            let checked = 0;
+            this.getAnswerForms(i).controls.forEach((answer) => {
+                if (answer.value.isCorrect && ++checked > 1) {
+                    console.log(event);
+                    this.snackBar.open('Only one correct answer permitted!', '', {
+                        duration: 1000,
+                    })
+                }
+            });
+        }
+    }
 }
