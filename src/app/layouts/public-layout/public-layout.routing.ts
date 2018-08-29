@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { PublicComponent } from '../../components/public/public/public.component';
+import {LoginComponent} from '../../components/public/login/login.component';
 
 export const PublicLayoutRoutes: Routes = [
     // {
@@ -46,4 +47,5 @@ export const PublicLayoutRoutes: Routes = [
     //     }]
     // }
     { path: '',      component: PublicComponent },
+    { path: 'login', component: LoginComponent },
 ];

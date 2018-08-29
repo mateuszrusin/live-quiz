@@ -21,11 +21,6 @@ import {
     MatTableModule, MatCardModule, MatSortModule, MatSnackBarModule, MatExpansionModule, MatSelectModule, MatCheckboxModule,
 } from '@angular/material';
 import {QuizzesComponent} from '../../components/admin/quizzes/quizzes.component';
-import {AngularFirestore} from 'angularfire2/firestore';
-import { AngularFireModule } from 'angularfire2';
-import { environment } from '../../../environments/environment';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
 import {QuizService} from '../../services/quiz.service';
 import {QuizComponent} from '../../components/admin/quiz/quiz.component';
 
@@ -35,9 +30,6 @@ import {QuizComponent} from '../../components/admin/quiz/quiz.component';
         RouterModule.forChild(AdminLayoutRoutes),
         ReactiveFormsModule,
         FormsModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireDatabaseModule,
-        AngularFireAuthModule,
         MatButtonModule,
         MatRippleModule,
         MatInputModule,
@@ -64,7 +56,6 @@ import {QuizComponent} from '../../components/admin/quiz/quiz.component';
         UpgradeComponent,
     ],
     providers: [
-        AngularFirestore,
         QuizService
     ],
 })

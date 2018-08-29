@@ -1,44 +1,35 @@
-import {Injectable} from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, Router} from '@angular/router';
-import {AngularFireAuth} from 'angularfire2/auth';
-import {UserService} from './user.service';
-import {AuthService} from './auth.service';
+import { Injectable } from '@angular/core';
+import {
+    CanActivate,
+    ActivatedRouteSnapshot,
+    RouterStateSnapshot,
+    Router
+} from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, take, tap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
-
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthGuard implements CanActivate {
 
     constructor(
-        public afAuth: AngularFireAuth,
-        public authService: AuthService,
+        private auth: AuthService,
         private router: Router
-    ) {
-    }
+    ) {}
 
-    // canActivate(): Promise<boolean> {
-    //     return new Promise((resolve, reject) => {
-    //         this.authService.user.subscribe(
-    //             (user) => {
-    //                 console.log(user);
-    //                 this.router.navigate(['/dashboard']);
-    //                 return resolve(false);
-    //             }, err => {
-    //
-    //                 console.log('lipa');
-    //                 return resolve(false);
-    //             });
-    //     });
-    // }
-
-    canActivate() {
-
-        console.table(['tak']);
-
-        if (localStorage.getItem('isLoggedin')) {
-            return true;
-        }
-
-        this.router.navigate(['/admin/login']);
-        return false;
+    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+        return this.auth.user.pipe(
+            take(1),
+            map(user => !!user),
+            tap(loggedIn => {
+                if (!loggedIn) {
+                    console.log('access denied');
+                    // this.notify.update('You must be logged in!', 'error');
+                    this.router.navigate(['/login']);
+                }
+            })
+        );
     }
 }

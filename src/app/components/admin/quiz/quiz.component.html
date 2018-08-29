@@ -8,7 +8,7 @@
                         <input matInput placeholder="title" formControlName="title">
                     </mat-form-field>
                     <div formArrayName="questions">
-                        <mat-accordion>
+                        <mat-accordion multi="true">
                             <div *ngFor="let question of questionForms.controls; let i=index" [formGroupName]="i">
                                 <mat-expansion-panel [expanded]="i+1 == questionForms.controls.length">
                                     <mat-expansion-panel-header>
@@ -39,7 +39,7 @@
                                     </mat-form-field>
 
                                     <div formArrayName="answers">
-                                        <mat-accordion>
+                                        <mat-accordion multi="true">
                                             <div *ngFor="let answer of getAnswerForms(i).controls; let j=index" [formGroupName]="j">
                                                 <mat-expansion-panel>
                                                     <mat-expansion-panel-header>

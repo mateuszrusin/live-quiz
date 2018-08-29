@@ -11,6 +11,13 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import {AppRoutingModule} from './app.routing';
 import {TranslateModule} from '@ngx-translate/core';
+import {AuthGuard} from './services/auth.guard';
+import {AuthService} from './services/auth.service';
+import {AngularFireAuth, AngularFireAuthModule} from 'angularfire2/auth';
+import {AngularFireModule} from 'angularfire2';
+import {environment} from '../environments/environment';
+import {AngularFireDatabaseModule} from 'angularfire2/database';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
 
 @NgModule({
     imports: [
@@ -20,14 +27,22 @@ import {TranslateModule} from '@ngx-translate/core';
         ComponentsModule,
         RouterModule,
         AppRoutingModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireDatabaseModule,
+        AngularFireAuthModule,
+        AngularFirestoreModule,
     ],
     declarations: [
         AppComponent,
         AdminLayoutComponent,
         PublicLayoutComponent
     ],
-    // providers: [AuthGuard, AuthService],
+    providers: [
+        AngularFireAuth,
+        AuthGuard,
+        AuthService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
