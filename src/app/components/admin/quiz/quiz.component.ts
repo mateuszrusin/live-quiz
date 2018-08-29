@@ -6,6 +6,7 @@ import {MatSnackBar} from '@angular/material';
 import {QuizService} from '../../../services/quiz.service';
 import {Quiz} from 'app/models/quiz';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import { QuestionType } from '../../../models/question-type';
 
 @Component({
     selector: 'app-quiz',
@@ -112,16 +113,17 @@ export class QuizComponent implements OnInit {
     }
 
     change(event, i) {
-        if (this.questionForms.at(i).value.type === 'single') {
-            let checked = 0;
-            this.getAnswerForms(i).controls.forEach((answer) => {
-                if (answer.value.isCorrect && ++checked > 1) {
-                    console.log(event);
-                    this.snackBar.open('Only one correct answer permitted!', '', {
-                        duration: 1000,
-                    })
-                }
-            });
+        if (this.questionForms.at(i).value.type === QuestionType.Single) {
+
+            const correct = this.getAnswerForms(i).controls
+                .map((answer) => answer.value.isCorrect ? 1 : 0)
+                .reduce((acc, value) => acc + value, 0);
+
+            if (correct !== 1) {
+                this.snackBar.open('Single choice question must have one correct answer!', '', {
+                    duration: 1000,
+                })
+            }
         }
     }
 }
