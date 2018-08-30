@@ -1,29 +1,31 @@
-<mat-card class="example-card">
-    <mat-card-header>
-        <mat-card-title>Login</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <form [formGroup]="loginForm">
-            <div>
-                <mat-form-field appearance="outline">
-                    <mat-label>E-mail</mat-label>
-                    <input matInput placeholder="E-mail address" formControlName="email" name="email" required>
-                </mat-form-field>
-                <div *ngIf="formErrors.email" class="help is-danger">
-                    {{ formErrors.email }}
-                </div>
+<div class="flex center middle">
+    <mat-card class="login-card">
+        <mat-card-header>
+            <mat-card-title>Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="loginForm">
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>E-mail</mat-label>
+                        <input matInput placeholder="E-mail address" formControlName="email" name="email" required>
+                    </mat-form-field>
+                    <div *ngIf="formErrors.email" class="help is-danger">
+                        {{ formErrors.email }}
+                    </div>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Password</mat-label>
-                    <input matInput placeholder="Password" type="password" formControlName="password" name="password" required>
-                </mat-form-field>
-                <div *ngIf="formErrors.password" class="help is-danger">
-                    {{ formErrors.password }}
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput placeholder="Password" type="password" formControlName="password" name="password" required>
+                    </mat-form-field>
+                    <div *ngIf="formErrors.password" class="help is-danger">
+                        {{ formErrors.password }}
+                    </div>
                 </div>
-            </div>
-        </form>
-    </mat-card-content>
-    <mat-card-actions align="end">
-        <button mat-raised-button (click)="login()" color="primary" [disabled]="!loginForm.valid">Login</button>
-    </mat-card-actions>
-</mat-card>
+            </form>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-raised-button (click)="login()" color="primary" [disabled]="!loginForm.valid">Login</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { PublicLayoutRoutes } from './public-layout.routing';
 import { QRCodeModule } from 'angularx-qrcode';
 import {LoginComponent} from '../../components/public/login/login.component';
+import {LogoutComponent} from '../../components/public/logout/logout.component';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {LoginComponent} from '../../components/public/login/login.component';
     declarations: [
         PublicComponent,
         LoginComponent,
+        LogoutComponent,
     ]
 })
 
