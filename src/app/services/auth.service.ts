@@ -103,8 +103,7 @@ export class AuthService {
                 // console.log(credential);
                 // return this.updateUserData(credential.user);
                 return this.router.navigate(['/admin']);
-            })
-            .catch(error => this.handleError(error));
+            });
     }
 
     // Sends email allowing user to reset password

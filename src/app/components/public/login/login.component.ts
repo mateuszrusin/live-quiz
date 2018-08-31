@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {MatDialog} from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 
@@ -33,15 +33,22 @@ export class LoginComponent implements OnInit {
         },
     };
 
-    constructor(private fb: FormBuilder, private auth: AuthService) {
-    }
+    constructor(private fb: FormBuilder, private auth: AuthService, private snackBar: MatSnackBar) {}
 
     ngOnInit() {
         this.buildForm();
     }
 
     login() {
-        this.auth.emailLogin(this.loginForm.value['email'], this.loginForm.value['password']);
+        this.loginForm.markAsPending();
+        this.auth.emailLogin(this.loginForm.value['email'], this.loginForm.value['password'])
+            .catch((error: Error) => {
+                // this.loginForm.enable();
+                this.loginForm.reset();
+                this.snackBar.open(error.message, '', {
+                    duration: 5000,
+                })
+            });
     }
 
     resetPassword() {

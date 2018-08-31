@@ -2,7 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PublicComponent } from '../../components/public/public/public.component';
-import { MatButtonModule, MatCardModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule, } from '@angular/material';
+import {
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSnackBarModule,
+} from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { PublicLayoutRoutes } from './public-layout.routing';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -21,6 +29,7 @@ import {LogoutComponent} from '../../components/public/logout/logout.component';
         MatCheckboxModule,
         MatFormFieldModule,
         MatIconModule,
+        MatSnackBarModule,
         QRCodeModule
     ],
     declarations: [
