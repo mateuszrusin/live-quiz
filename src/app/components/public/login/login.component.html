@@ -1,4 +1,4 @@
-<div class="flex center middle">
+<div>
     <mat-card class="login-card">
         <mat-card-header>
             <mat-card-title>
@@ -31,7 +31,10 @@
                     </div>
                 </div>
                 <div class="login">
-                    <button mat-raised-button (click)="login()" color="warn" [disabled]="!loginForm.valid">Login</button>
+                    <button mat-raised-button (click)="login()" color="warn" [disabled]="!loginForm.valid || isLoading">Login</button>
+                </div>
+                <div class="loader">
+                    <mat-progress-bar *ngIf="isLoading" class="example-margin" color="primary" mode="query"></mat-progress-bar>
                 </div>
             </form>
         </mat-card-content>

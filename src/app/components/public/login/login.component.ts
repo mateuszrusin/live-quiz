@@ -14,8 +14,9 @@ type FormErrors = { [u in UserFields]: string };
 })
 export class LoginComponent implements OnInit {
 
-    loginForm: FormGroup;
     passReset = false; // set to true when password reset is triggered
+    isLoading = false;
+    loginForm: FormGroup;
     formErrors: FormErrors = {
         'email': '',
         'password': '',
@@ -40,11 +41,11 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        this.loginForm.markAsPending();
+        this.handleLoading(true);
         this.auth.emailLogin(this.loginForm.value['email'], this.loginForm.value['password'])
             .catch((error: Error) => {
-                // this.loginForm.enable();
                 this.loginForm.reset();
+                this.handleLoading(false);
                 this.snackBar.open(error.message, '', {
                     duration: 5000,
                 })
@@ -76,12 +77,10 @@ export class LoginComponent implements OnInit {
     // Updates validation state on form changes.
     onValueChanged(data?: any) {
         if (!this.loginForm) { return; }
-        const form = this.loginForm;
         for (const field in this.formErrors) {
-            if (Object.prototype.hasOwnProperty.call(this.formErrors, field) && (field === 'email' || field === 'password')) {
-                // clear previous error message (if any)
+            if (this.checkField(field)) {
+                const control = this.loginForm.get(field);
                 this.formErrors[field] = '';
-                const control = form.get(field);
                 if (control && control.dirty && !control.valid) {
                     const messages = this.validationMessages[field];
                     if (control.errors) {
@@ -94,5 +93,13 @@ export class LoginComponent implements OnInit {
                 }
             }
         }
+    }
+
+    private handleLoading(flag: boolean): void {
+        this.isLoading = flag;
+    }
+
+    private checkField(field: string): boolean {
+        return Object.prototype.hasOwnProperty.call(this.formErrors, field) && (field === 'email' || field === 'password');
     }
 }

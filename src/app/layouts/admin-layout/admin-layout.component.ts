@@ -1,10 +1,9 @@
-import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
-import {Location, LocationStrategy, PathLocationStrategy, PopStateEvent} from '@angular/common';
-import 'rxjs/add/operator/filter';
-import {NavbarComponent} from './components/navbar/navbar.component';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Location, PopStateEvent} from '@angular/common';
 import {Router, NavigationEnd, NavigationStart} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import PerfectScrollbar from 'perfect-scrollbar';
+import {filter} from 'rxjs/operators';
 
 @Component({
     selector: 'app-admin-layout',
@@ -16,12 +15,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
 
-    public test: boolean;
-    public email: string;
-    public password: string;
-
-    constructor(public location: Location, private router: Router) {
-    }
+    constructor(public location: Location, private router: Router) {}
 
     ngOnInit() {
         const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
@@ -53,10 +47,14 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
                 }
             }
         });
-        this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-            elemMainPanel.scrollTop = 0;
-            elemSidebar.scrollTop = 0;
-        });
+        this._router = this.router.events
+            .pipe(
+                filter(event => event instanceof NavigationEnd)
+            )
+            .subscribe((event: NavigationEnd) => {
+                elemMainPanel.scrollTop = 0;
+                elemSidebar.scrollTop = 0;
+            });
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             let ps = new PerfectScrollbar(elemMainPanel);
             ps = new PerfectScrollbar(elemSidebar);
@@ -65,16 +63,6 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.runOnRouteChange();
-    }
-
-    isMaps(path) {
-        let titlee = this.location.prepareExternalUrl(this.location.path());
-        titlee = titlee.slice(1);
-        if (path === titlee) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
     runOnRouteChange(): void {
@@ -86,10 +74,10 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
     }
 
     isMac(): boolean {
-        let bool = false;
-        if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {
-            bool = true;
-        }
-        return bool;
+        return navigator.platform.search('/mac|ipad/i') >= 0;
+    }
+
+    isMaps(path): boolean {
+        return path !== this.location.prepareExternalUrl(this.location.path()).slice(1);
     }
 }

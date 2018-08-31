@@ -45,3 +45,8 @@
     margin-bottom: 1em;
     margin-top: -1em;
 }
+
+.loader {
+    margin-top: 10px;
+    height: 5px;
+}

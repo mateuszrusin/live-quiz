@@ -1,16 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import * as firebase from 'firebase/app';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
 
-import { firebase } from '@firebase/app';
-import { auth } from 'firebase';
-import { AngularFireAuth } from 'angularfire2/auth';
-import {
-    AngularFirestore,
-    AngularFirestoreDocument
-} from 'angularfire2/firestore';
-
-import { Observable, of } from 'rxjs';
-import { switchMap, startWith, tap, filter } from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
 
 interface User {
     uid: string;
@@ -44,22 +39,22 @@ export class AuthService {
     ////// OAuth Methods /////
 
     googleLogin() {
-        const provider = new auth.GoogleAuthProvider();
+        const provider = new firebase.auth.GoogleAuthProvider();
         return this.oAuthLogin(provider);
     }
 
     githubLogin() {
-        const provider = new auth.GithubAuthProvider();
+        const provider = new firebase.auth.GithubAuthProvider();
         return this.oAuthLogin(provider);
     }
 
     facebookLogin() {
-        const provider = new auth.FacebookAuthProvider();
+        const provider = new firebase.auth.FacebookAuthProvider();
         return this.oAuthLogin(provider);
     }
 
     twitterLogin() {
-        const provider = new auth.TwitterAuthProvider();
+        const provider = new firebase.auth.TwitterAuthProvider();
         return this.oAuthLogin(provider);
     }
 
@@ -108,7 +103,7 @@ export class AuthService {
 
     // Sends email allowing user to reset password
     resetPassword(email: string) {
-        const fbAuth = auth();
+        const fbAuth = firebase.auth();
 
         return fbAuth
             .sendPasswordResetEmail(email)

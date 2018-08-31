@@ -8,7 +8,7 @@ import {
     MatCheckboxModule,
     MatFormFieldModule,
     MatIconModule,
-    MatInputModule,
+    MatInputModule, MatProgressBarModule,
     MatSnackBarModule,
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
@@ -30,6 +30,7 @@ import {LogoutComponent} from '../../components/public/logout/logout.component';
         MatFormFieldModule,
         MatIconModule,
         MatSnackBarModule,
+        MatProgressBarModule,
         QRCodeModule
     ],
     declarations: [
