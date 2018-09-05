@@ -27,7 +27,6 @@ import {
     MatTooltipModule,
 } from '@angular/material';
 import {QuizzesComponent} from '../../components/admin/quizzes/quizzes.component';
-import {QuizService} from '../../services/quiz.service';
 import {QuizComponent} from '../../components/admin/quiz/quiz.component';
 
 @NgModule({
@@ -62,7 +61,6 @@ import {QuizComponent} from '../../components/admin/quiz/quiz.component';
         UpgradeComponent,
     ],
     providers: [
-        QuizService
     ],
 })
 

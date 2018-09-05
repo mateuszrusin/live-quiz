@@ -1,0 +1,17 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="">
+            <button mat-raised-button (click)="fader(-1)" [disabled]="index < 1">Prev</button>
+            <button mat-raised-button (click)="fader(1)"  [disabled]="quiz?.questions.length <= index + 1">Next</button>
+        </div>
+        <br /><br />
+        <div class="mat-elevation-z8">
+            <mat-card>
+                <mat-card-title>{{ index }}</mat-card-title>
+                <mat-card [ngClass]="{'fadeIn': fadeIn, 'fadeOut': fadeOut}">
+                    {{ quiz?.questions[index] | json }}
+                </mat-card>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -16,6 +16,7 @@ import { PublicLayoutRoutes } from './public-layout.routing';
 import { QRCodeModule } from 'angularx-qrcode';
 import {LoginComponent} from '../../components/public/login/login.component';
 import {LogoutComponent} from '../../components/public/logout/logout.component';
+import {QuizComponent} from '../../components/public/quiz/quiz.component';
 
 @NgModule({
     imports: [
@@ -37,6 +38,7 @@ import {LogoutComponent} from '../../components/public/logout/logout.component';
         PublicComponent,
         LoginComponent,
         LogoutComponent,
+        QuizComponent
     ]
 })
 
