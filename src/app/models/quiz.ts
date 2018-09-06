@@ -1,5 +1,9 @@
+import {Question} from './question';
+
 export interface Quiz {
     id?: string;
     title?: string;
-    questions?: any;
+    created?: number;
+    modified?: number;
+    questions?: Question[];
   }

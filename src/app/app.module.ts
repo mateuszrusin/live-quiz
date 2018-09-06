@@ -24,7 +24,6 @@ import {QuizService} from './services/quiz.service';
     imports: [
         BrowserAnimationsModule,
         FormsModule,
-        HttpModule,
         ComponentsModule,
         RouterModule,
         AppRoutingModule,

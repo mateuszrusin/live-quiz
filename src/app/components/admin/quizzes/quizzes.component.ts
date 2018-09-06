@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {merge, Observable, of as observableOf} from 'rxjs';
-import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {catchError, map, startWith, switchMap, tap} from 'rxjs/operators';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {QuizService} from '../../../services/quiz.service';
 import {Quiz} from 'app/models/quiz';
@@ -16,7 +16,7 @@ export class QuizzesComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    displayedColumns: string[] = ['position', 'title', 'id', 'action'];
+    displayedColumns: string[] = ['position', 'title', 'id', 'created', 'modified', 'action'];
     dataSource = new MatTableDataSource<any>();
 
     data: any[] = [];
@@ -43,7 +43,7 @@ export class QuizzesComponent implements OnInit {
                 map(data => {
                     const start = this.paginator.pageIndex * this.paginator.pageSize;
                     this.resultsLength = data.length;
-
+                    console.log(start);
                     return data.slice(start, start + this.paginator.pageSize);
                 }),
                 catchError(() => {

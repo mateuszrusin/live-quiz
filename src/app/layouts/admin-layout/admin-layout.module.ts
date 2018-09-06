@@ -28,6 +28,7 @@ import {
 } from '@angular/material';
 import {QuizzesComponent} from '../../components/admin/quizzes/quizzes.component';
 import {QuizComponent} from '../../components/admin/quiz/quiz.component';
+import {MomentModule} from 'angular2-moment';
 
 @NgModule({
     imports: [
@@ -35,6 +36,7 @@ import {QuizComponent} from '../../components/admin/quiz/quiz.component';
         RouterModule.forChild(AdminLayoutRoutes),
         ReactiveFormsModule,
         FormsModule,
+        MomentModule,
         MatButtonModule,
         MatRippleModule,
         MatInputModule,

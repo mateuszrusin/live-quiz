@@ -15,7 +15,7 @@ export class QuizService {
 
     constructor(private db: AngularFirestore) {
         this.quizzesCollection = this.db.collection('/quizzes');
-        // this.tasks = this.afs.collection('tasks').valueChanges();
+
         this.quizzes = this.quizzesCollection.snapshotChanges().pipe(
             map(changes => {
                 return changes.map(a => {
@@ -32,6 +32,7 @@ export class QuizService {
 
         const quiz = {
             title: '',
+            created: new Date().getTime(),
             questions: []
         };
 
@@ -43,6 +44,7 @@ export class QuizService {
     }
 
     save(id: string, data: any): Promise<void> {
+        data.modified = new Date().getTime();
         return this.get(id).update(data);
     }
 

@@ -1,11 +1,6 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="mat-elevation-z8">
-
-            <div>
-                {{ quiz | async | json }}
-            </div>
-
             <mat-card>
                 <mat-form-field>
                     <input matInput (keyup)="filter($event.target.value)" placeholder="Filter">
@@ -18,19 +13,30 @@
                         <mat-cell *matCellDef="let i = index"> {{ paginator.pageIndex * paginator.pageSize + i + 1 }}</mat-cell>
                     </ng-container>
 
-                    <!-- Name Column -->
                     <ng-container matColumnDef="title">
                         <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Title</mat-header-cell>
                         <mat-cell *matCellDef="let element"> {{element.title}}</mat-cell>
                     </ng-container>
 
-                    <!-- Weight Column -->
                     <ng-container matColumnDef="id">
                         <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
                         <mat-cell *matCellDef="let element"> {{element.id}}</mat-cell>
                     </ng-container>
 
-                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="created">
+                        <mat-header-cell *matHeaderCellDef> Created</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            {{element.created ? (element.created | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm:ss') : '-'}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="modified">
+                        <mat-header-cell *matHeaderCellDef> Modified</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            {{element.modified ? (element.modified | amLocal | amDateFormat: 'YYYY-MM-DD HH:mm:ss') : '-'}}
+                        </mat-cell>
+                    </ng-container>
+
                     <ng-container matColumnDef="action">
                         <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
                         <mat-cell *matCellDef="let element">
