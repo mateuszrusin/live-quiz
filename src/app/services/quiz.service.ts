@@ -10,21 +10,9 @@ import {map} from 'rxjs/operators';
 export class QuizService {
 
     quizzesCollection: AngularFirestoreCollection<Quiz>;
-    quizzes: Observable<Quiz[]>;
-    quizDocument: AngularFirestoreDocument<Quiz>;
 
     constructor(private db: AngularFirestore) {
         this.quizzesCollection = this.db.collection('/quizzes');
-
-        this.quizzes = this.quizzesCollection.snapshotChanges().pipe(
-            map(changes => {
-                return changes.map(a => {
-                    const data = a.payload.doc.data() as Quiz;
-                    data.id = a.payload.doc.id;
-                    return data;
-                });
-            })
-        );
     }
 
     /// Creates an question, then returns as an object
@@ -49,6 +37,14 @@ export class QuizService {
     }
 
     list(): Observable<Quiz[]> {
-        return this.quizzes;
+        return this.quizzesCollection.snapshotChanges().pipe(
+            map(changes => {
+                return changes.map(a => {
+                    const data = a.payload.doc.data() as Quiz;
+                    data.id = a.payload.doc.id;
+                    return data;
+                });
+            })
+        );
     }
 }
