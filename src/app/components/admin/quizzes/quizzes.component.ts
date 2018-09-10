@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap, tap} from 'rxjs/operators';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {QuizService} from '../../../services/quiz.service';
 import {Quiz} from 'app/models/quiz';
 import {Router} from '@angular/router';
@@ -16,7 +16,7 @@ export class QuizzesComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    displayedColumns: string[] = ['position', 'title', 'id', 'created', 'modified', 'action'];
+    displayedColumns: string[] = ['position', 'title', 'id', 'created', 'modified', 'edit', 'delete'];
     dataSource = new MatTableDataSource<any>();
 
     data: any[] = [];
@@ -25,9 +25,11 @@ export class QuizzesComponent implements OnInit {
     public quizzes: Observable<Quiz[]>;
     public quiz: Observable<Quiz>;
 
-    constructor(private quizService: QuizService, private router: Router) {
-
-    }
+    constructor(
+        private quizService: QuizService,
+        private router: Router,
+        private snackBar: MatSnackBar
+    ) { }
 
     ngOnInit() {
         this.dataSource.paginator = this.paginator;
@@ -43,7 +45,6 @@ export class QuizzesComponent implements OnInit {
                 map(data => {
                     const start = this.paginator.pageIndex * this.paginator.pageSize;
                     this.resultsLength = data.length;
-                    console.log(start);
                     return data.slice(start, start + this.paginator.pageSize);
                 }),
                 catchError(() => {
@@ -68,5 +69,13 @@ export class QuizzesComponent implements OnInit {
 
     edit(id: string) {
         this.router.navigate(['/admin/quiz/' + id]);
+    }
+
+    delete(id: string) {
+        this.quizService.delete(id).then(() =>
+            this.snackBar.open('Quiz deleted!', '', {
+                duration: 5000,
+            })
+        );
     }
 }

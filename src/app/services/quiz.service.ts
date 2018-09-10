@@ -36,6 +36,10 @@ export class QuizService {
         return this.get(id).update(data);
     }
 
+    delete(id: string): Promise<void> {
+        return this.get(id).delete();
+    }
+
     list(): Observable<Quiz[]> {
         return this.quizzesCollection.snapshotChanges().pipe(
             map(changes => {
