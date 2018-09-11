@@ -15,7 +15,7 @@ import {UpgradeComponent} from '../../components/admin/upgrade/upgrade.component
 import {
     MatButtonModule,
     MatCardModule,
-    MatCheckboxModule,
+    MatCheckboxModule, MatDialogModule,
     MatExpansionModule,
     MatInputModule,
     MatPaginatorModule,
@@ -48,7 +48,8 @@ import {MomentModule} from 'angular2-moment';
         MatSortModule,
         MatSnackBarModule,
         MatExpansionModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatDialogModule,
     ],
     declarations: [
         DashboardComponent,

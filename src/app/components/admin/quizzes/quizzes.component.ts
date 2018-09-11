@@ -1,10 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {merge, Observable, of as observableOf} from 'rxjs';
-import {catchError, map, startWith, switchMap, tap} from 'rxjs/operators';
-import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
+import {catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
 import {QuizService} from '../../../services/quiz.service';
 import {Quiz} from 'app/models/quiz';
 import {Router} from '@angular/router';
+import { ConfirmComponent } from '../../../layouts/admin-layout/components/dialog/confirm/confirm.component';
 
 @Component({
     selector: 'app-quiz',
@@ -28,7 +29,8 @@ export class QuizzesComponent implements OnInit {
     constructor(
         private quizService: QuizService,
         private router: Router,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private dialog: MatDialog
     ) { }
 
     ngOnInit() {
@@ -72,10 +74,17 @@ export class QuizzesComponent implements OnInit {
     }
 
     delete(id: string) {
-        this.quizService.delete(id).then(() =>
-            this.snackBar.open('Quiz deleted!', '', {
-                duration: 5000,
-            })
-        );
+
+        this.dialog.open(ConfirmComponent, {
+            data: 'Are you sure to delete this quiz?'
+        }).afterClosed().subscribe(result => {
+            if (result) {
+                this.quizService.delete(id).then(() =>
+                    this.snackBar.open('Quiz deleted!', '', {
+                        duration: 5000,
+                    })
+                );
+            }
+        });
     }
 }

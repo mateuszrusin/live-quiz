@@ -35,8 +35,6 @@ export class QuizComponent implements OnInit {
             questions: this.fb.array([])
         });
 
-        // this.quizForm.valueChanges.subscribe(console.log);
-
         this.quiz$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
                 this.id = params.get('id');
