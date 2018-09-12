@@ -7,6 +7,7 @@ import {QuizService} from '../../../services/quiz.service';
 import {Quiz} from 'app/models/quiz';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import { QuestionType } from '../../../models/question-type';
+import { Question } from '../../../models/question';
 
 @Component({
     selector: 'app-quiz',
@@ -15,7 +16,7 @@ import { QuestionType } from '../../../models/question-type';
 })
 export class QuizComponent implements OnInit {
 
-    public quizForm: FormGroup;
+    public question: Question;
     public quiz$: Observable<Quiz>;
     public quiz: Quiz;
 
@@ -34,14 +35,6 @@ export class QuizComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-
-        this.quizForm = this.fb.group({
-            title: '',
-            questions: this.fb.array([])
-        });
-
-        // this.quizForm.valueChanges.subscribe(console.log);
-
         this.quiz$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
                 this.id = params.get('id');
@@ -50,28 +43,8 @@ export class QuizComponent implements OnInit {
         );
 
         this.quiz$.subscribe(data => {
-
             this.quiz = data;
-
-            this.quizForm.patchValue(data);
-
-            const questions = data.questions.map(question => {
-                const answers = question.answers.map(answer => {
-                    return this.fb.group({
-                        content: [answer.content],
-                        isCorrect: [answer.isCorrect]
-                    });
-                });
-
-                return this.fb.group({
-                    type: [question.type],
-                    title: [question.title],
-                    content: [question.content],
-                    answers: this.fb.array(answers),
-                })
-            });
-
-            this.quizForm.setControl('questions', this.fb.array(questions));
+            this.question = data.questions[this.index];
         });
     }
 
@@ -80,8 +53,13 @@ export class QuizComponent implements OnInit {
         this.fadeOut = true;
         setTimeout( () => {
             this.index = this.index + value;
+            this.question = this.quiz.questions[this.index];
             this.fadeOut = false;
             this.fadeIn = true;
-        }, 2000 );
+        }, 1000 );
+    }
+
+    check(event) {
+        console.log(event);
     }
 }
