@@ -1,24 +1,21 @@
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="">
-            <button mat-raised-button (click)="fader(-1)" [disabled]="index < 1">Prev</button>
-            <button mat-raised-button (click)="fader(1)"  [disabled]="quiz?.questions.length <= index + 1">Next</button>
-        </div>
-        <br /><br />
-        <div *ngIf="question" class="mat-elevation-z8">
-            <mat-card [ngClass]="{'fadeIn': fadeIn, 'fadeOut': fadeOut}">
-                <mat-card-title>{{ question.title }}</mat-card-title>
-                <mat-card-subtitle>{{ question.content }}</mat-card-subtitle>
-                <mat-card>
-                    <form>
-                        <div *ngFor="let answer of question.answers; let i=index">
-                            <mat-checkbox (change)="check($event)" class="checkbox">
-                                {{ answer.content }}
-                            </mat-checkbox>
-                        </div>
-                    </form>
-                </mat-card>
-            </mat-card>
-        </div>
+<div class="container-fluid">
+    <div class="">
+        <button mat-raised-button (click)="fader(-1)" [disabled]="index < 1">Prev</button>
+        <button mat-raised-button (click)="fader(1)"  [disabled]="quiz?.questions.length <= index + 1">Next</button>
+    </div>
+    <br /><br />
+    <div *ngIf="question" class="mat-elevation-z8">
+        <mat-card [ngClass]="{'fadeIn': fadeIn, 'fadeOut': fadeOut}" class="question">
+            <mat-card-title>{{ question.title }}</mat-card-title>
+            <mat-card-subtitle>{{ question.content }}</mat-card-subtitle>
+            <div *ngFor="let answer of question.answers; let i=index">
+                <mat-radio-button *ngIf="isSingle(question)" (change)="check($event)" class="checkbox">
+                    {{ answer.content }}
+                </mat-radio-button>
+                <mat-checkbox *ngIf="isMulti(question)" (change)="check($event)" class="checkbox">
+                    {{ answer.content }}
+                </mat-checkbox>
+            </div>
+        </mat-card>
     </div>
 </div>

@@ -8,7 +8,7 @@ import {
     MatCheckboxModule,
     MatFormFieldModule,
     MatIconModule,
-    MatInputModule, MatProgressBarModule,
+    MatInputModule, MatProgressBarModule, MatRadioModule,
     MatSnackBarModule,
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
@@ -28,6 +28,7 @@ import {QuizComponent} from '../../components/public/quiz/quiz.component';
         MatCardModule,
         MatButtonModule,
         MatCheckboxModule,
+        MatRadioModule,
         MatFormFieldModule,
         MatIconModule,
         MatSnackBarModule,

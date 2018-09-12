@@ -18,7 +18,7 @@ import {
     MatCheckboxModule, MatDialogModule,
     MatExpansionModule,
     MatInputModule,
-    MatPaginatorModule,
+    MatPaginatorModule, MatRadioModule,
     MatRippleModule,
     MatSelectModule,
     MatSnackBarModule,
@@ -49,6 +49,7 @@ import {MomentModule} from 'angular2-moment';
         MatSnackBarModule,
         MatExpansionModule,
         MatCheckboxModule,
+        MatRadioModule,
         MatDialogModule,
     ],
     declarations: [

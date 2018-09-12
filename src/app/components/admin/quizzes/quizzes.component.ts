@@ -17,7 +17,7 @@ export class QuizzesComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    displayedColumns: string[] = ['position', 'title', 'id', 'created', 'modified', 'edit', 'delete'];
+    displayedColumns: string[] = ['position', 'title', 'questions', 'created', 'modified', 'edit', 'delete', 'show'];
     dataSource = new MatTableDataSource<any>();
 
     data: any[] = [];
@@ -71,6 +71,10 @@ export class QuizzesComponent implements OnInit {
 
     edit(id: string) {
         this.router.navigate(['/admin/quiz/' + id]);
+    }
+
+    show(id: string) {
+        this.router.navigate(['/quiz/' + id]);
     }
 
     delete(id: string) {

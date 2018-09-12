@@ -18,9 +18,9 @@
                         <mat-cell *matCellDef="let element"> {{element.title}}</mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="id">
-                        <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.id}}</mat-cell>
+                    <ng-container matColumnDef="questions">
+                        <mat-header-cell *matHeaderCellDef> Questions</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.questions.length}}</mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="created">
@@ -51,6 +51,15 @@
                         <mat-cell *matCellDef="let element">
                             <button mat-raised-button color="warn" (click)="delete(element.id)">
                                 Delete
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="show">
+                        <mat-header-cell *matHeaderCellDef> Show</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <button mat-raised-button color="accent" (click)="show(element.id)">
+                                Show
                             </button>
                         </mat-cell>
                     </ng-container>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
@@ -7,6 +7,7 @@ import {QuizService} from '../../../services/quiz.service';
 import {Quiz} from 'app/models/quiz';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import { QuestionType } from '../../../models/question-type';
+import {Question} from '../../../models/question';
 
 @Component({
     selector: 'app-quiz',
@@ -42,28 +43,7 @@ export class QuizComponent implements OnInit {
             })
         );
 
-        this.quiz$.subscribe(data => {
-
-            this.quizForm.patchValue(data);
-
-            const questions = data.questions.map(question => {
-                const answers = question.answers.map(answer => {
-                    return this.fb.group({
-                        content: [answer.content],
-                        isCorrect: [answer.isCorrect]
-                    });
-                });
-
-                return this.fb.group({
-                    type: [question.type],
-                    title: [question.title],
-                    content: [question.content],
-                    answers: this.fb.array(answers),
-                })
-            });
-
-            this.quizForm.setControl('questions', this.fb.array(questions));
-        });
+        this.quiz$.subscribe(data => this.buildForm(data));
     }
 
     save() {
@@ -123,5 +103,27 @@ export class QuizComponent implements OnInit {
                 })
             }
         }
+    }
+
+    private buildForm(data: Quiz): void {
+
+        const questions = data.questions.map(question => {
+            const answers = question.answers.map(answer => {
+                return this.fb.group({
+                    content: [answer.content],
+                    isCorrect: [answer.isCorrect]
+                });
+            });
+
+            return this.fb.group({
+                type: [question.type],
+                title: [question.title],
+                content: [question.content],
+                answers: this.fb.array(answers),
+            })
+        });
+
+        this.quizForm.patchValue(data);
+        this.quizForm.setControl('questions', this.fb.array(questions));
     }
 }
