@@ -6,6 +6,7 @@ import {QuizService} from '../../../services/quiz.service';
 import {Quiz} from 'app/models/quiz';
 import {Router} from '@angular/router';
 import { ConfirmComponent } from '../../../layouts/admin-layout/components/dialog/confirm/confirm.component';
+import { QRCodeComponent } from '../../../layouts/admin-layout/components/dialog/qrcode/qrcode.component';
 
 @Component({
     selector: 'app-quiz',
@@ -17,7 +18,7 @@ export class QuizzesComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    displayedColumns: string[] = ['position', 'title', 'questions', 'created', 'modified', 'edit', 'delete', 'show'];
+    displayedColumns: string[] = ['position', 'title', 'questions', 'created', 'modified', 'action'];
     dataSource = new MatTableDataSource<any>();
 
     data: any[] = [];
@@ -75,6 +76,12 @@ export class QuizzesComponent implements OnInit {
 
     show(id: string) {
         this.router.navigate(['/quiz/' + id]);
+    }
+
+    qrcode(id: string) {
+        this.dialog.open(QRCodeComponent, {
+            data: this.router.createUrlTree(['/quiz/' + id])
+        });
     }
 
     delete(id: string) {

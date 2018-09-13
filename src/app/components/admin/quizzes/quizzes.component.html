@@ -37,30 +37,13 @@
                         </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="edit">
-                        <mat-header-cell *matHeaderCellDef> Edit</mat-header-cell>
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
                         <mat-cell *matCellDef="let element">
-                            <button mat-raised-button (click)="edit(element.id)">
-                                Edit
-                            </button>
-                        </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="delete">
-                        <mat-header-cell *matHeaderCellDef> Delete</mat-header-cell>
-                        <mat-cell *matCellDef="let element">
-                            <button mat-raised-button color="warn" (click)="delete(element.id)">
-                                Delete
-                            </button>
-                        </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="show">
-                        <mat-header-cell *matHeaderCellDef> Show</mat-header-cell>
-                        <mat-cell *matCellDef="let element">
-                            <button mat-raised-button color="accent" (click)="show(element.id)">
-                                Show
-                            </button>
+                            <button mat-raised-button (click)="edit(element.id)">Edit</button>
+                            <button mat-raised-button (click)="delete(element.id)" color="warn">Delete</button>
+                            <button mat-raised-button (click)="show(element.id)" color="accent">Show</button>
+                            <button mat-raised-button (click)="qrcode(element.id)">QR Code</button>
                         </mat-cell>
                     </ng-container>
 
