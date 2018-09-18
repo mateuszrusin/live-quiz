@@ -8,6 +8,7 @@ import {Quiz} from 'app/models/quiz';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import { QuestionType } from '../../../models/question-type';
 import {Question} from '../../../models/question';
+import {QuestionService} from '../../../services/question.service';
 
 @Component({
     selector: 'app-quiz',
@@ -23,6 +24,7 @@ export class QuizComponent implements OnInit {
 
     constructor(
         private quizService: QuizService,
+        private questionService: QuestionService,
         private fb: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
@@ -47,6 +49,7 @@ export class QuizComponent implements OnInit {
     }
 
     save() {
+        console.log(this.quizForm.value);
         this.quizService.save(this.id, this.quizForm.value).then(() =>
             this.snackBar.open('Quiz Saved', '', {
                 duration: 5000,
@@ -59,14 +62,19 @@ export class QuizComponent implements OnInit {
     }
 
     addQuestion() {
-        const question = this.fb.group({
-            type: '',
-            title: '',
-            content: '',
-            answers: this.fb.array([]),
-        });
+        this.questionService.create().then(
+            (data) => {
+                const question = this.fb.group({
+                    id: [data.id],
+                    type: [QuestionType.Single],
+                    title: [''],
+                    content: [''],
+                    answers: this.fb.array([]),
+                });
 
-        this.questionForms.push(question);
+                this.questionForms.push(question);
+            }
+        );
     }
 
     deleteQuestion(i) {
@@ -107,20 +115,23 @@ export class QuizComponent implements OnInit {
 
     private buildForm(data: Quiz): void {
 
-        const questions = data.questions.map(question => {
-            const answers = question.answers.map(answer => {
-                return this.fb.group({
-                    content: [answer.content],
-                    isCorrect: [answer.isCorrect]
+        const questions = data.questions.map((id) => {
+            this.questionService.get(id).valueChanges().subscribe((question) => {
+                const answers = question.answers.map(answer => {
+                    return this.fb.group({
+                        content: [answer.content],
+                        isCorrect: [answer.isCorrect]
+                    });
                 });
-            });
 
-            return this.fb.group({
-                type: [question.type],
-                title: [question.title],
-                content: [question.content],
-                answers: this.fb.array(answers),
-            })
+                return this.fb.group({
+                    id: [question.id],
+                    type: [question.type],
+                    title: [question.title],
+                    content: [question.content],
+                    answers: this.fb.array(answers),
+                })
+            });
         });
 
         this.quizForm.patchValue(data);

@@ -19,6 +19,7 @@ import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireModule } from '@angular/fire';
+import {QuestionService} from './services/question.service';
 
 @NgModule({
     imports: [
@@ -42,7 +43,8 @@ import { AngularFireModule } from '@angular/fire';
         AngularFireAuth,
         AuthGuard,
         AuthService,
-        QuizService
+        QuizService,
+        QuestionService,
     ],
     bootstrap: [AppComponent]
 })
