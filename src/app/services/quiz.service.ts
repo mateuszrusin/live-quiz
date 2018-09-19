@@ -11,16 +11,13 @@ import {Question} from '../models/question';
 export class QuizService {
 
     quizzesCollection: AngularFirestoreCollection<Quiz>;
-    questionsCollection: AngularFirestoreCollection<Question>;
 
     constructor(private db: AngularFirestore) {
         this.quizzesCollection = this.db.collection('/quizzes');
     }
 
-    /// Creates an question, then returns as an object
     create() {
-
-        const quiz = {
+        const quiz: Quiz = {
             title: '',
             created: new Date().getTime(),
             questions: []
@@ -35,14 +32,14 @@ export class QuizService {
 
     save(id: string, data: Quiz): Promise<void> {
 
-        const questions = [];
-
         const batch = this.db.firestore.batch();
         const questionsCollection = this.db.collection('/questions');
 
-        data.questions.forEach((question: Question, index) => {
-            questions.push(question.id);
+        const questions = data.questions.map((question, index) => {
+
             batch.set(questionsCollection.doc(question.id).ref, question);
+
+            return question.id;
         });
 
         return batch.commit().then(() => {

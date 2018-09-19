@@ -16,7 +16,7 @@ import {Question} from '../../../models/question';
 })
 export class QuizComponent implements OnInit {
 
-    public question: Question;
+    public question: any;
     public quiz$: Observable<Quiz>;
     public quiz: Quiz;
 

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {last, mergeMap, switchMap} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 import {QuizService} from '../../../services/quiz.service';
 import {Quiz} from 'app/models/quiz';
@@ -38,18 +38,15 @@ export class QuizComponent implements OnInit {
             questions: this.fb.array([])
         });
 
-        this.quiz$ = this.route.paramMap.pipe(
+        this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
                 this.id = params.get('id');
                 return this.quizService.get(this.id).valueChanges();
-            })
-        );
-
-        this.quiz$.subscribe(data => this.buildForm(data));
+            }))
+            .subscribe(data => this.buildForm(data));
     }
 
     save() {
-        console.log(this.quizForm.value);
         this.quizService.save(this.id, this.quizForm.value).then(() =>
             this.snackBar.open('Quiz Saved', '', {
                 duration: 5000,
@@ -115,26 +112,29 @@ export class QuizComponent implements OnInit {
 
     private buildForm(data: Quiz): void {
 
-        const questions = data.questions.map((id) => {
-            this.questionService.get(id).valueChanges().subscribe((question) => {
-                const answers = question.answers.map(answer => {
-                    return this.fb.group({
-                        content: [answer.content],
-                        isCorrect: [answer.isCorrect]
-                    });
-                });
-
-                return this.fb.group({
-                    id: [question.id],
-                    type: [question.type],
-                    title: [question.title],
-                    content: [question.content],
-                    answers: this.fb.array(answers),
-                })
-            });
-        });
-
         this.quizForm.patchValue(data);
-        this.quizForm.setControl('questions', this.fb.array(questions));
+
+        if (!this.questionForms.length) {
+            data.questions.map((id, index) => {
+                this.questionService.get(id).valueChanges().subscribe((question) => {
+                    const answers = question.answers.map(answer => {
+                        return this.fb.group({
+                            content: [answer.content],
+                            isCorrect: [answer.isCorrect]
+                        });
+                    });
+
+                    const questionGroup = this.fb.group({
+                        id: [question.id],
+                        type: [question.type],
+                        title: [question.title],
+                        content: [question.content],
+                        answers: this.fb.array(answers),
+                    });
+
+                    this.questionForms.push(questionGroup);
+                });
+            });
+        }
     }
 }

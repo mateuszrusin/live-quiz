@@ -96,7 +96,7 @@ export class AuthService {
             .signInWithEmailAndPassword(email, password)
             .then(credential => {
                 // console.log(credential);
-                // return this.updateUserData(credential.user);
+                this.updateUserData(credential.user);
                 return this.router.navigate(['/admin']);
             });
     }

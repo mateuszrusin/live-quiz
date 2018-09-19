@@ -4,5 +4,5 @@ export interface Quiz {
     title?: string;
     created?: number;
     modified?: number;
-    questions?: string[];
+    questions?: any[];
   }
