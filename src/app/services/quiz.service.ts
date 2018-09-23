@@ -34,8 +34,7 @@ export class QuizService {
 
         const batch = this.db.firestore.batch();
         const questionsCollection = this.db.collection('/questions');
-
-        const questions = data.questions.map((question, index) => {
+        const questions = data.questions.map((question) => {
 
             batch.set(questionsCollection.doc(question.id).ref, question);
 

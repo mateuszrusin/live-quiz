@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="">
-        <button mat-raised-button (click)="fader(-1)" [disabled]="index < 1">Prev</button>
-        <button mat-raised-button (click)="fader(1)"  [disabled]="quiz?.questions.length <= index + 1">Next</button>
+        <button mat-raised-button (click)="fader(-1)">Prev</button>
+        <button mat-raised-button (click)="fader(1)">Next</button>
     </div>
     <br /><br />
     <div *ngIf="question" class="mat-elevation-z8">

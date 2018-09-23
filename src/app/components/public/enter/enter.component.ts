@@ -15,7 +15,7 @@ import {QuestionService} from '../../../services/question.service';
     templateUrl: './quiz.component.html',
     styleUrls: ['./quiz.component.scss']
 })
-export class QuizComponent implements OnInit {
+export class EnterComponent implements OnInit {
 
     question: Question;
     quiz$: Observable<Quiz>;
@@ -28,48 +28,16 @@ export class QuizComponent implements OnInit {
     private id: string;
 
     constructor(
-        private quizService: QuizService,
-        private questionService: QuestionService,
-        private fb: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private snackBar: MatSnackBar
     ) {}
 
     ngOnInit() {
-        this.quiz$ = this.route.paramMap.pipe(
+        this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
                 this.id = params.get('id');
                 return this.quizService.get(this.id).valueChanges();
             })
         );
-
-        this.quiz$.subscribe(data => {
-            this.quiz = data;
-            this.fader(0);
-        });
-    }
-
-    fader(value) {
-        this.fadeIn = false;
-        this.fadeOut = true;
-        this.index = this.index + value;
-        this.questionService.get(this.quiz.questions[this.index]).valueChanges().subscribe((question: Question) => {
-            this.question = question;
-            this.fadeOut = false;
-            this.fadeIn = true;
-        });
-    }
-
-    check(event) {
-        console.log(event);
-    }
-
-    isSingle(question: Question): boolean {
-        return question.type === QuestionType.Single;
-    }
-
-    isMulti(question: Question): boolean {
-        return question.type === QuestionType.Multi;
     }
 }

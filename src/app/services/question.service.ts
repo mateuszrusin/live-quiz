@@ -34,6 +34,17 @@ export class QuestionService {
         return this.questionsCollection.doc(id);
     }
 
+
+    save(questions: Question[]): Promise<any> {
+        const batch = this.db.firestore.batch();
+
+        questions.map((question) => {
+            batch.set(this.questionsCollection.doc(question.id).ref, question);
+        });
+
+        return batch.commit();
+    }
+
     // save(id: string, data: any): Promise<void> {
     //
     //     const questions = [];

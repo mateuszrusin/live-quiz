@@ -20,6 +20,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireModule } from '@angular/fire';
 import {QuestionService} from './services/question.service';
+import {PublicGuard} from './services/public.guard';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import {QuestionService} from './services/question.service';
     providers: [
         AngularFireAuth,
         AuthGuard,
+        PublicGuard,
         AuthService,
         QuizService,
         QuestionService,
