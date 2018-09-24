@@ -17,6 +17,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import {LoginComponent} from '../../components/public/login/login.component';
 import {LogoutComponent} from '../../components/public/logout/logout.component';
 import {QuizComponent} from '../../components/public/quiz/quiz.component';
+import {EnterComponent} from '../../components/public/enter/enter.component';
 
 @NgModule({
     imports: [
@@ -39,6 +40,7 @@ import {QuizComponent} from '../../components/public/quiz/quiz.component';
         PublicComponent,
         LoginComponent,
         LogoutComponent,
+        EnterComponent,
         QuizComponent
     ]
 })

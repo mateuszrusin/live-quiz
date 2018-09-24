@@ -26,6 +26,8 @@ export class QuizComponent implements OnInit {
     fadeOut = true;
 
     private id: string;
+    private uid: string;
+    private answer: number[] = [];
 
     constructor(
         private quizService: QuizService,
@@ -40,6 +42,7 @@ export class QuizComponent implements OnInit {
         this.quiz$ = this.route.paramMap.pipe(
             switchMap((params: ParamMap) => {
                 this.id = params.get('id');
+                this.uid = params.get('uid');
                 return this.quizService.get(this.id).valueChanges();
             })
         );
@@ -48,6 +51,10 @@ export class QuizComponent implements OnInit {
             this.quiz = data;
             this.fader(0);
         });
+    }
+
+    save() {
+        console.log(this.question);
     }
 
     fader(value) {

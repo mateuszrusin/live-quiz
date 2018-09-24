@@ -1,43 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
-import {MatSnackBar} from '@angular/material';
-import {QuizService} from '../../../services/quiz.service';
-import {Quiz} from 'app/models/quiz';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {QuestionType} from '../../../models/question-type';
-import {Question} from '../../../models/question';
-import {QuestionService} from '../../../services/question.service';
+import {Component} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-    selector: 'app-quiz',
-    templateUrl: './quiz.component.html',
-    styleUrls: ['./quiz.component.scss']
+    selector: 'app-enter',
+    template: '',
 })
-export class EnterComponent implements OnInit {
-
-    question: Question;
-    quiz$: Observable<Quiz>;
-    quiz: Quiz;
-
-    index = 0;
-    fadeIn = false;
-    fadeOut = true;
-
-    private id: string;
+export class EnterComponent {
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-    ) {}
+        router: Router,
+        route: ActivatedRoute,
+    ) {
+        route.params.subscribe(params => {
+            localStorage.setItem('uid', Math.random().toString(36).substr(2, 9));
 
-    ngOnInit() {
-        this.route.paramMap.pipe(
-            switchMap((params: ParamMap) => {
-                this.id = params.get('id');
-                return this.quizService.get(this.id).valueChanges();
-            })
-        );
+            return router.navigate(['quiz', params.id, localStorage.getItem('uid')]);
+        })
     }
 }
