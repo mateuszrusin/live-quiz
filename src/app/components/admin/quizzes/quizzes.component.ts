@@ -75,7 +75,7 @@ export class QuizzesComponent implements OnInit {
     }
 
     show(id: string) {
-        this.router.navigate(['/quiz/' + id]);
+        this.router.navigate(['/enter/' + id]);
     }
 
     qrcode(id: string) {

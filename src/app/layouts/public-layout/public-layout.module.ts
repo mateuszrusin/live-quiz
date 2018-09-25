@@ -18,6 +18,7 @@ import {LoginComponent} from '../../components/public/login/login.component';
 import {LogoutComponent} from '../../components/public/logout/logout.component';
 import {QuizComponent} from '../../components/public/quiz/quiz.component';
 import {EnterComponent} from '../../components/public/enter/enter.component';
+import { RadioComponent } from '../../components/public/radio/radio.component';
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import {EnterComponent} from '../../components/public/enter/enter.component';
         LoginComponent,
         LogoutComponent,
         EnterComponent,
-        QuizComponent
+        QuizComponent,
+        RadioComponent
     ]
 })
 

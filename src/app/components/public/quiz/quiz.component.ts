@@ -18,6 +18,7 @@ import {QuestionService} from '../../../services/question.service';
 export class QuizComponent implements OnInit {
 
     question: Question;
+    answers = [];
     quiz$: Observable<Quiz>;
     quiz: Quiz;
 
@@ -54,7 +55,12 @@ export class QuizComponent implements OnInit {
     }
 
     save() {
-        console.log(this.question);
+
+        const res =  this.answers
+            .filter(opt => opt.checked)
+            .map(opt => opt.value);
+
+        console.log(res);
     }
 
     fader(value) {
@@ -63,6 +69,17 @@ export class QuizComponent implements OnInit {
         this.index = this.index + value;
         this.questionService.get(this.quiz.questions[this.index]).valueChanges().subscribe((question: Question) => {
             this.question = question;
+
+            this.answers = question.answers.map((answer, index) => {
+                return {
+                    value: index,
+                    content: answer.content,
+                    checked: false
+                };
+            });
+
+            console.log(this.answers);
+
             this.fadeOut = false;
             this.fadeIn = true;
         });

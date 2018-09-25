@@ -8,11 +8,11 @@
         <mat-card [ngClass]="{'fadeIn': fadeIn, 'fadeOut': fadeOut}" class="question">
             <mat-card-title>{{ question.title }}</mat-card-title>
             <mat-card-subtitle>{{ question.content }}</mat-card-subtitle>
-            <div *ngFor="let answer of question.answers; let i=index">
-                <mat-radio-button *ngIf="isSingle(question)" (change)="check($event)" [value]="i">
+            <div *ngFor="let answer of answers">
+                <mat-radio-button *ngIf="isSingle(question)" (change)="check($event)" [(ngModel)]="answer.checked" ngDefaultControl>
                     {{ answer.content }}
                 </mat-radio-button>
-                <mat-checkbox *ngIf="isMulti(question)" (change)="check($event)" [value]="i">
+                <mat-checkbox *ngIf="isMulti(question)" (change)="check($event)" [(ngModel)]="answer.checked" ngDefaultControl>
                     {{ answer.content }}
                 </mat-checkbox>
             </div>
