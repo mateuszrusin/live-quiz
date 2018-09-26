@@ -9,6 +9,7 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {QuestionType} from '../../../models/question-type';
 import {Question} from '../../../models/question';
 import {QuestionService} from '../../../services/question.service';
+import {VoteService} from '../../../services/vote.service';
 
 @Component({
     selector: 'app-quiz',
@@ -32,10 +33,8 @@ export class QuizComponent implements OnInit {
     constructor(
         private quizService: QuizService,
         private questionService: QuestionService,
-        private fb: FormBuilder,
-        private route: ActivatedRoute,
-        private router: Router,
-        private snackBar: MatSnackBar
+        private voteService: VoteService,
+        private route: ActivatedRoute
     ) {}
 
     ngOnInit() {
@@ -55,11 +54,19 @@ export class QuizComponent implements OnInit {
 
     save() {
 
-        const res =  this.answers
+        const result =  this.answers
             .filter(answer => answer.checked)
             .map(answer => answer.value);
 
-        console.log(res);
+        const data = {
+            user: this.uid,
+            answer: result,
+        }
+
+        this.voteService
+            .create(this.id, this.question.id, data)
+            .then((doc) => console.log(doc));
+
     }
 
     fader(value) {

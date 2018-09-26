@@ -21,6 +21,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireModule } from '@angular/fire';
 import {QuestionService} from './services/question.service';
 import {PublicGuard} from './services/public.guard';
+import {VoteService} from './services/vote.service';
 
 @NgModule({
     imports: [
@@ -47,6 +48,7 @@ import {PublicGuard} from './services/public.guard';
         AuthService,
         QuizService,
         QuestionService,
+        VoteService,
     ],
     bootstrap: [AppComponent]
 })
