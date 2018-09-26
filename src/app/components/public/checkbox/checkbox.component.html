@@ -1,0 +1,6 @@
+<mat-checkbox *ngFor="let answer of answers"
+    ngDefaultControl
+    [(ngModel)]="answer.checked"
+    class="checkbox-button">
+        {{ answer.content }}
+</mat-checkbox>

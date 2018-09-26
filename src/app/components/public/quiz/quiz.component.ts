@@ -28,7 +28,6 @@ export class QuizComponent implements OnInit {
 
     private id: string;
     private uid: string;
-    private answer: number[] = [];
 
     constructor(
         private quizService: QuizService,
@@ -57,8 +56,8 @@ export class QuizComponent implements OnInit {
     save() {
 
         const res =  this.answers
-            .filter(opt => opt.checked)
-            .map(opt => opt.value);
+            .filter(answer => answer.checked)
+            .map(answer => answer.value);
 
         console.log(res);
     }
@@ -78,15 +77,9 @@ export class QuizComponent implements OnInit {
                 };
             });
 
-            console.log(this.answers);
-
             this.fadeOut = false;
             this.fadeIn = true;
         });
-    }
-
-    check(event) {
-        console.log(event);
     }
 
     isSingle(question: Question): boolean {

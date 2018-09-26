@@ -19,6 +19,7 @@ import {LogoutComponent} from '../../components/public/logout/logout.component';
 import {QuizComponent} from '../../components/public/quiz/quiz.component';
 import {EnterComponent} from '../../components/public/enter/enter.component';
 import { RadioComponent } from '../../components/public/radio/radio.component';
+import { CheckboxComponent } from '../../components/public/checkbox/checkbox.component';
 
 @NgModule({
     imports: [
@@ -43,7 +44,8 @@ import { RadioComponent } from '../../components/public/radio/radio.component';
         LogoutComponent,
         EnterComponent,
         QuizComponent,
-        RadioComponent
+        RadioComponent,
+        CheckboxComponent,
     ]
 })
 
