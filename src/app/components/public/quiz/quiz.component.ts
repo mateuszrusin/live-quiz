@@ -10,6 +10,7 @@ import {QuestionType} from '../../../models/question-type';
 import {Question} from '../../../models/question';
 import {QuestionService} from '../../../services/question.service';
 import {VoteService} from '../../../services/vote.service';
+import {Answer} from '../../../models/answer';
 
 @Component({
     selector: 'app-quiz',
@@ -24,8 +25,7 @@ export class QuizComponent implements OnInit {
     quiz: Quiz;
 
     index = 0;
-    fadeIn = false;
-    fadeOut = true;
+    fade = true;
 
     private id: string;
     private uid: string;
@@ -70,23 +70,9 @@ export class QuizComponent implements OnInit {
     }
 
     fader(value) {
-        this.fadeIn = false;
-        this.fadeOut = true;
-        this.index = this.index + value;
-        this.questionService.get(this.quiz.questions[this.index]).valueChanges().subscribe((question: Question) => {
-            this.question = question;
-
-            this.answers = question.answers.map((answer, index) => {
-                return {
-                    value: index,
-                    content: answer.content,
-                    checked: false
-                };
-            });
-
-            this.fadeOut = false;
-            this.fadeIn = true;
-        });
+        this.fade = false;
+        this.index += value;
+        this.questionService.get(this.quiz.questions[this.index]).valueChanges().subscribe((question: Question) => this.next(question));
     }
 
     isSingle(question: Question): boolean {
@@ -95,5 +81,21 @@ export class QuizComponent implements OnInit {
 
     isMulti(question: Question): boolean {
         return question.type === QuestionType.Multi;
+    }
+
+    private next(question: Question): void {
+        this.question = question;
+        this.answers = this.getAnswers();
+        this.fade = true;
+    }
+
+    private getAnswers() {
+        return this.question.answers.map((answer, index) => {
+            return {
+                value: index,
+                content: answer.content,
+                checked: false
+            };
+        });
     }
 }

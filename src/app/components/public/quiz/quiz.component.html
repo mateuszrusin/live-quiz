@@ -5,7 +5,7 @@
     </div>
     <br /><br />
     <div *ngIf="question" class="mat-elevation-z8">
-        <mat-card [ngClass]="{'fadeIn': fadeIn, 'fadeOut': fadeOut}" class="question">
+        <mat-card [ngClass]="{'fadeIn': fade, 'fadeOut': !fade}" class="question">
             <mat-card-title>{{ question.title }}</mat-card-title>
             <mat-card-subtitle>{{ question.content }}</mat-card-subtitle>
             <app-quiz-radio    *ngIf="isSingle(question)" [answers]="answers"></app-quiz-radio>
